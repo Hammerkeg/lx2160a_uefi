@@ -1,0 +1,52 @@
+stages:
+  - build
+  - upload
+#  - release
+
+variables:
+    # Package version can only contain numbers (0-9), and dots (.).
+    # See https://docs.gitlab.com/ee/user/packages/generic_packages/#publish-a-package-file
+    XZ_DEFAULTS: "-T 0"
+    PACKAGE_FILE: lx2160a-firmware_${CI_COMMIT_SHORT_SHA}.tar.xz
+    PACKAGE_VERSION: "1.0.0"
+    PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/lx2k-firmware/${PACKAGE_VERSION}"
+    DEBIAN_FRONTEND: "noninteractive"
+
+build:
+  stage: build
+  image: ubuntu:impish
+  rules:
+    - if: $CI_COMMIT_SHORT_SHA
+  script:
+    - apt update
+    - apt-get -y --no-install-recommends install less
+    - apt-get -y --no-install-recommends install wget make acpica-tools device-tree-compiler xz-utils sudo git gettext-base uuid-dev bc gcc g++ python3 libc6-dev libssl-dev python3-distutils ca-certificates | less
+    - ls -l /usr/bin/gcc
+    - INITIALIZE=1 ./runme.sh | less
+    - ./runme.sh | less
+    - BOOT_MODE=flexspi_nor ./runme.sh | less
+    - tar -cJf ${PACKAGE_FILE} images/* | less
+  artifacts:
+      paths:
+        - ${PACKAGE_FILE}
+
+upload:
+  stage: upload
+  image: curlimages/curl:latest
+  rules:
+    - if: $CI_COMMIT_SHORT_SHA
+  script:
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ${PACKAGE_FILE} ${PACKAGE_REGISTRY_URL}/${PACKAGE_FILE}
+
+# release:
+#   # Caution, as of 2021-02-02 these assets links require a login, see:
+#   # https://gitlab.com/gitlab-org/gitlab/-/issues/299384
+#   stage: release
+#   image: registry.gitlab.com/gitlab-org/release-cli:latest
+#   rules:
+#     - if: $CI_COMMIT_SHORT_SHA
+#   script:
+#     - |
+#       release-cli create --name "Release $CI_COMMIT_SHORT_SHA" --tag-name $CI_COMMIT_SHORT_SHA \
+#         --assets-link "{\"name\":\"${PACKAGE_FILE}\",\"url\":\"${PACKAGE_REGISTRY_URL}/${PACKAGE_FILE}\"}"
