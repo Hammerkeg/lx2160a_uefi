@@ -28,10 +28,6 @@ build:
         - build/tianocore/edk2-non-osi
         - build/tianocore/edk2-platform
   script:
-    - apt update
-    - apt-get -y --no-install-recommends install less
-    - apt-get -y --no-install-recommends install wget make acpica-tools device-tree-compiler xz-utils sudo git gettext-base uuid-dev bc gcc g++ python3 libc6-dev libssl-dev python3-distutils ca-certificates | less
-    - ls -l /usr/bin/gcc
     - INITIALIZE=1 ./runme.sh
     - ./runme.sh
     - BOOT_MODE=flexspi_nor ./runme.sh
