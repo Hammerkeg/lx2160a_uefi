@@ -14,7 +14,7 @@ variables:
 
 build:
   stage: build
-  image: ubuntu:impish
+  image: hammerkeg/kernel_build
   rules:
     - if: $CI_COMMIT_SHORT_SHA
   cache:
