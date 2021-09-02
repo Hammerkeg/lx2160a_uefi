@@ -17,16 +17,6 @@ build:
   image: hammerkeg/kernel_build_gcc10
   rules:
     - if: $CI_COMMIT_SHORT_SHA
-  cache:
-    - key: $CI_RUNNER_ID$CI_COMMIT_REF_SLUG
-      paths:
-        - build/arm-trusted-firmware
-        - build/ddr-phy-binary
-        - build/optee_os
-        - build/rcw
-        - build/tianocore/edk2
-        - build/tianocore/edk2-non-osi
-        - build/tianocore/edk2-platform
   script:
     - INITIALIZE=1 ./runme.sh
     - ./runme.sh
