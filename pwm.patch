@@ -1,0 +1,13 @@
+--- build/tianocore/edk2-platforms/Platform/SolidRun/LX2160aCex7/LX2160aCex7.dsc	2021-11-23 10:13:53.887110788 +0100
++++ LX2160aCex7_pwm.dsc	2021-11-23 10:11:31.660320564 +0100
+@@ -107,8 +107,8 @@
+   gNxpQoriqLsTokenSpaceGuid.PcdTmuActiveTempFull|0xDCC # 80C
+ 
+   # Hex value of PWM Duty, 0 - 255, Value / 255 * 100
+-  gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedDefault|0x72 # 45%
+-  gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedLow|0x9A     # 60%
++  gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedDefault|0x00 # 45%
++  gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedLow|0x4D     # 60%
+   gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedHigh|0xCC    # 80%
+ 
+ !if $(MC_HIGH_MEM) == TRUE                                        # Management Complex loaded at the end of DDR2
