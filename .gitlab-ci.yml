@@ -21,7 +21,7 @@ build:
     - INITIALIZE=1 ./runme.sh
     - patch build/tianocore/edk2-platforms/Platform/SolidRun/LX2160aCex7/LX2160aCex7.dsc < pwm.patch
     - ./runme.sh
-    - BOOT_MODE=flexspi_nor ./runme.sh
+    - SERDES=20_5_2 ./runme.sh
     - tar -cJf ${PACKAGE_FILE} images/*
     - CLEAN=1 ./runme.sh
   artifacts:
@@ -36,15 +36,3 @@ upload:
   script:
     - |
       curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ${PACKAGE_FILE} ${PACKAGE_REGISTRY_URL}/${PACKAGE_FILE}
-
-# release:
-#   # Caution, as of 2021-02-02 these assets links require a login, see:
-#   # https://gitlab.com/gitlab-org/gitlab/-/issues/299384
-#   stage: release
-#   image: registry.gitlab.com/gitlab-org/release-cli:latest
-#   rules:
-#     - if: $CI_COMMIT_SHORT_SHA
-#   script:
-#     - |
-#       release-cli create --name "Release $CI_COMMIT_SHORT_SHA" --tag-name $CI_COMMIT_SHORT_SHA \
-#         --assets-link "{\"name\":\"${PACKAGE_FILE}\",\"url\":\"${PACKAGE_REGISTRY_URL}/${PACKAGE_FILE}\"}"
