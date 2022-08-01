@@ -19,7 +19,6 @@ build:
     - if: $CI_COMMIT_SHORT_SHA
   script:
     - INITIALIZE=1 ./runme.sh
-    - patch build/tianocore/edk2-platforms/Platform/SolidRun/LX2160aCex7/LX2160aCex7.dsc < pwm.patch
     - ./runme.sh
     - SERDES=20_5_2 ./runme.sh
     - tar -cJf ${PACKAGE_FILE} images/*
