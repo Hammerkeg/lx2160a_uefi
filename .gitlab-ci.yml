@@ -1,7 +1,6 @@
 stages:
   - build
   - upload
-#  - release
 
 variables:
     # Package version can only contain numbers (0-9), and dots (.).
@@ -20,9 +19,7 @@ build:
   script:
     - INITIALIZE=1 ./runme.sh
     - ./runme.sh
-    - SERDES=20_5_2 ./runme.sh
     - tar -cJf ${PACKAGE_FILE} images/*
-    - CLEAN=1 ./runme.sh
   artifacts:
       paths:
         - ${PACKAGE_FILE}
