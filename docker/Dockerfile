@@ -10,9 +10,8 @@ RUN set -e; \
 RUN apt-get update ; apt-get -y --no-install-recommends install \
 	wget make acpica-tools device-tree-compiler xz-utils \
 	sudo git gettext-base uuid-dev bc gcc g++ python3 \ 
-	libc6-dev libssl-dev python3-distutils ca-certificates
-
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
+	libc6-dev libssl-dev python3-distutils ca-certificates \
+	python-is-python3
 
 # build environment
 ARG ddr=2400
