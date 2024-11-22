@@ -1,5 +1,5 @@
 # use debian base
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
 # update
 RUN set -e; \
