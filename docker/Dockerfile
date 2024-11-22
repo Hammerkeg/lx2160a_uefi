@@ -11,7 +11,7 @@ RUN apt-get update ; apt-get -y --no-install-recommends install \
 	wget make acpica-tools device-tree-compiler xz-utils \
 	sudo git gettext-base uuid-dev bc gcc g++ python3 \ 
 	libc6-dev libssl-dev python3-distutils ca-certificates \
-	python-is-python3
+	python-is-python3 python3-pyelftools python3-pycryptodome
 
 # build environment
 ARG ddr=2400
